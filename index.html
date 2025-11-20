@@ -1,4 +1,4 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -146,9 +146,6 @@ x<!DOCTYPE html>
 
 
 
-
-
-
         nav ul li a {
             color: white;
             font-weight: 500;
@@ -227,6 +224,81 @@ x<!DOCTYPE html>
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            background-color: var(--light-blue);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
         }
 
         /* Services Section */
@@ -575,7 +647,9 @@ x<!DOCTYPE html>
             <nav>
                 <ul>
                     <li><a href="#home">Accueil</a></li>
-                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#about">À Propos de Nous</a></li>
+                    <li><a href="#activities">Activités</a></li>
+                    <li><a href="#gallery">Galerie</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#operations">Opérations</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -620,6 +694,45 @@ x<!DOCTYPE html>
             </div>
         </div>
     </section>
+
+    <!-- Activities Section -->
+    <section id="activities" class="about">
+        <div class="container">
+            <h2 class="section-title">Activités</h2>
+            <ul style="list-style: disc; padding-left: 20px; font-size: 1.1rem; line-height: 1.8;">
+                <li>HYGIENE ET ASSAINISSEMENT</li>
+                <li>PRESTATION DE SERVICES</li>
+                <li>BATIMENTS TRAVAUX PUBLICS ET HYDRAULIQUES</li>
+                <li>COMMERCE GENERAL</li>
+                <li>IMPORT-EXPORT</li>
+                <li>LOCATION VEHICULES</li>
+                <li>EXPLOITATION ET COMMERCIALISATION DES SUBSTANCES MINERALES</li>
+                <li>PRODUCTION ET COMMERCIALISATION DES MATERIELS ET INTRANTS AGRICOLES</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Galerie</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openModal('gallery/gallery (1).jpeg')">
+                    <img src="gallery/gallery (1).jpeg" alt="Image de galerie 1">
+                </div>
+                <div class="gallery-item" onclick="openModal('gallery/gallery (2).jpeg')">
+                    <img src="gallery/gallery (2).jpeg" alt="Image de galerie 2">
+                </div>
+                <div class="gallery-item" onclick="openModal('gallery/gallery (3).jpeg')">
+                    <img src="gallery/gallery (3).jpeg" alt="Image de galerie 3">
+                </div>
+                <div class="gallery-item" onclick="openModal('gallery/gallery (4).jpeg')">
+                    <img src="gallery/gallery (4).jpeg" alt="Image de galerie 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Services Section -->
     <section id="services" class="services">
@@ -755,6 +868,8 @@ x<!DOCTYPE html>
                     <ul class="footer-links">
                         <li><a href="#home">Accueil</a></li>
                         <li><a href="#about">À propos</a></li>
+                        <li><a href="#activities">Activités</a></li>
+                        <li><a href="#gallery">Galerie</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="#operations">Opérations</a></li>
                         <li><a href="#contact">Contact</a></li>
@@ -782,6 +897,14 @@ x<!DOCTYPE html>
             </div>
         </div>
     </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Image agrandie">
+        </div>
+    </div>
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/22796515101?text=Bonjour%20Sohared%20Mining,%20je%20voudrais%20plus%20d'informations" class="whatsapp-float" target="_blank">
@@ -832,6 +955,24 @@ x<!DOCTYPE html>
                 header.style.backgroundColor = 'var(--primary-color)';
             }
         });
+
+        // Gallery Modal Functions
+        function openModal(src) {
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('modal-img').src = src;
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
